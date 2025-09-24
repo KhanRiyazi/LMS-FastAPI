@@ -88,6 +88,27 @@
             border: none;
             font-size: 16px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
         }
 
         .btn-primary {
@@ -183,6 +204,22 @@
         .nav-links a {
             font-weight: 500;
             transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .nav-links a:hover {
@@ -202,6 +239,11 @@
             background: none;
             border: none;
             color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--primary);
         }
 
         /* Mobile Menu */
@@ -217,10 +259,15 @@
             z-index: 999;
             flex-direction: column;
             gap: 20px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
         .mobile-menu.active {
             display: flex;
+            transform: translateY(0);
+            opacity: 1;
         }
 
         .mobile-menu .nav-links {
@@ -260,16 +307,20 @@
             font-size: 3.5rem;
             color: var(--dark);
             margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease;
         }
 
         .hero-title span {
             color: var(--primary);
+            display: inline-block;
+            animation: pulse 2s infinite;
         }
 
         .hero-description {
             font-size: 1.2rem;
             color: var(--text-light);
             margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
 
         .hero-actions {
@@ -277,12 +328,14 @@
             gap: 15px;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
         }
 
         .hero-stats {
             display: flex;
             gap: 30px;
             flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
         }
 
         .stat {
@@ -304,11 +357,17 @@
         .hero-image {
             flex: 1;
             position: relative;
+            animation: fadeInRight 0.8s ease;
         }
 
         .hero-img {
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-img:hover {
+            transform: scale(1.02);
         }
 
         /* Achievements Section */
@@ -331,6 +390,23 @@
             text-align: center;
             transition: var(--transition);
             border-top: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .achievement-card:hover::before {
+            left: 100%;
         }
 
         .achievement-card:hover {
@@ -397,6 +473,11 @@
             color: white;
             font-size: 1.2rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .video-placeholder:hover {
+            transform: scale(1.02);
         }
 
         .video-placeholder i {
@@ -422,6 +503,25 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hack-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
+        }
+
+        .hack-item:hover::before {
+            transform: scaleY(1);
         }
 
         .hack-item:hover {
@@ -452,6 +552,7 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            flex-shrink: 0;
         }
 
         .hack-item.active .hack-toggle {
@@ -495,11 +596,62 @@
             align-items: center;
             gap: 5px;
             font-size: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hack-action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s;
+        }
+
+        .hack-action-btn:active::after {
+            width: 100px;
+            height: 100px;
+            top: -50px;
+            left: -50px;
         }
 
         .hack-action-btn:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
+        }
+
+        .hack-action-btn.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .hack-action-btn.loading::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 16px;
+            height: 16px;
+            margin: -8px 0 0 -8px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .hack-action-btn.success {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+
+        .hack-action-btn.error {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--accent);
         }
 
         .hack-code {
@@ -512,6 +664,25 @@
             line-height: 1.5;
             overflow-x: auto;
             margin-top: 15px;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Features Section */
@@ -532,6 +703,23 @@
             box-shadow: var(--shadow);
             transition: var(--transition);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(67, 97, 238, 0.05), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
         }
 
         .feature-card:hover {
@@ -573,6 +761,7 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            position: relative;
         }
 
         .course-card:hover {
@@ -878,10 +1067,13 @@
             z-index: 1001;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .video-modal.active {
             display: flex;
+            opacity: 1;
         }
 
         .modal-content {
@@ -891,6 +1083,12 @@
             border-radius: var(--radius);
             overflow: hidden;
             position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .video-modal.active .modal-content {
+            transform: scale(1);
         }
 
         .modal-header {
@@ -908,10 +1106,105 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
         }
 
         .modal-body {
             padding: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: var(--radius);
+            background: white;
+            box-shadow: var(--shadow);
+            z-index: 1002;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--accent);
+        }
+
+        .notification i {
+            font-size: 1.2rem;
+        }
+
+        .notification.success i {
+            color: var(--success);
+        }
+
+        .notification.error i {
+            color: var(--accent);
         }
 
         /* Responsive Styles */
@@ -962,6 +1255,15 @@
             .hero-actions {
                 justify-content: center;
             }
+
+            .hack-actions {
+                flex-direction: column;
+            }
+
+            .hack-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 576px) {
@@ -973,15 +1275,6 @@
             .btn {
                 width: 100%;
                 max-width: 280px;
-            }
-
-            .hack-actions {
-                flex-direction: column;
-            }
-
-            .hack-action-btn {
-                width: 100%;
-                justify-content: center;
             }
 
             .hero-stats {
@@ -996,6 +1289,12 @@
 </head>
 
 <body>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Action completed successfully!</span>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -1017,7 +1316,7 @@
 
                 <div class="nav-actions">
                     <a href="https://affiliatemath.xyz/" class="btn btn-secondary btn-small">Sign In</a>
-                    <a href="https://khanriyazi.github.io/Graphic-Designer/">Get Started</a>
+                    <a href="https://khanriyazi.github.io/Graphic-Designer/" class="btn btn-primary">Get Started</a>
                 </div>
 
                 <button class="mobile-menu-btn">
@@ -1038,8 +1337,8 @@
         </ul>
 
         <div class="nav-actions">
-            <a href="#" class="btn btn-secondary">Sign In</a>
-            <a href="#" class="btn btn-primary">Get Started</a>
+            <a href="https://affiliatemath.xyz/" class="btn btn-secondary">Sign In</a>
+            <a href="https://khanriyazi.github.io/Graphic-Designer/" class="btn btn-primary">Get Started</a>
         </div>
     </div>
 
@@ -1048,13 +1347,16 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">Learn Without <span>Limits</span></h1>
-                    <p class="hero-description">EduFlow empowers educators and learners with a modern, intuitive
-                        platform that makes online learning engaging and effective.</p>
+                    <h1 class="hero-title">Machine Learning <span>Mission</span></h1>
+                    <p class="hero-description">
+                        Our mission is to introduce students from Class 8th to 12th to the world of Machine Learning,
+                        helping them build strong foundations in logic, mathematics, and coding while nurturing
+                        creativity and problem-solving skills for the AI-driven future.
+                    </p>
+
 
                     <div class="hero-actions">
-                        <a href="https://khanriyazi.github.io/Graphic-Designer/pages/hacks.html"
-                            class="btn btn-primary">Start Learning Free</a>
+                        <a href="affiliate.html" class="btn btn-primary">find the Great click</a>
                         <a href="https://khanriyazi.github.io/My-To-do/" class="btn btn-secondary">Book a Demo</a>
                     </div>
 
@@ -1075,8 +1377,7 @@
                 </div>
 
                 <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                        alt="Students learning online" class="hero-img">
+                    <img src="mystudents.jpg" alt="Students learning online" class="hero-img">
                 </div>
             </div>
         </div>
@@ -1127,138 +1428,69 @@
     </section>
 
     <!-- Video Section -->
-    <!----------------------button------------------------------------->
-    <section class="section video-section"
-        style="padding:60px 20px; background:#f4f7fb; text-align:center; font-family:Arial, sans-serif;">
-        <div class="container" style="max-width:950px; margin:auto;">
-
-            <div class="section-header" style="margin-bottom:40px;">
-                <h2 class="section-title" style="font-size:30px; color:#222; margin-bottom:10px;">
-                    🚀 Welcome to My FastAPI LMS
-                </h2>
-                <p class="section-subtitle" style="font-size:16px; color:#555;">
-                    Learn Python + FastAPI step by step with interactive lessons
-                </p>
+    <section class="section video-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Welcome to My FastAPI LMS</h2>
+                <p class="section-subtitle">Learn Python + FastAPI step by step with interactive lessons</p>
             </div>
 
             <!-- Main Suspended Button with Image -->
-            <div id="main-button" style="display:inline-block; padding:25px; background:#007bff; border-radius:25px; 
-                box-shadow:0 10px 25px rgba(0,0,0,0.2); cursor:pointer; transition:transform 0.3s ease; 
-                color:#fff; max-width:500px;">
+            <div id="main-button" class="video-container">
+                <div style="padding:25px; background:#007bff; border-radius:25px; 
+                    box-shadow:0 10px 25px rgba(0,0,0,0.2); cursor:pointer; transition:transform 0.3s ease; 
+                    color:#fff; max-width:500px; margin: 0 auto;">
 
-                <!-- Image -->
-                <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI Logo"
-                    style="width:120px; height:auto; display:block; margin:0 auto 15px auto;">
+                    <!-- Image -->
+                    <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI Logo"
+                        style="width:120px; height:auto; display:block; margin:0 auto 15px auto;">
 
-                <!-- Title -->
-                <span style="font-size:22px; font-weight:bold; display:block; margin-bottom:15px;">
-                    Master Python FastAPI
-                </span>
+                    <!-- Title -->
+                    <span style="font-size:22px; font-weight:bold; display:block; margin-bottom:15px;">
+                        Master Python FastAPI
+                    </span>
 
-                <!-- Inner Buttons -->
-                <div style="margin-top:10px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
-                    <!-- Video Popup Button -->
-                    <button id="introBtn" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
-                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
-                        ▶️ Watch Intro
-                    </button>
+                    <!-- Inner Buttons -->
+                    <div style="margin-top:10px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                        <!-- Video Popup Button -->
+                        <button id="introBtn" class="btn btn-primary" style="background: white; color: #007bff;">
+                            ▶️ Watch Intro
+                        </button>
 
-                    <!-- Essentials Video -->
-                    <button id="essentialsBtn" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
-                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
-                        ⚡ FastAPI Essentials
-                    </button>
+                        <!-- Essentials Video -->
+                        <button id="essentialsBtn" class="btn btn-primary" style="background: white; color: #007bff;">
+                            ⚡ FastAPI Essentials
+                        </button>
 
-                    <!-- Official Link -->
-                    <button onclick="window.open('https://fastapi.tiangolo.com/learn/', '_blank')" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
-                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
-                        📖 Official Docs
-                    </button>
+                        <!-- Official Link -->
+                        <button onclick="window.open('https://fastapi.tiangolo.com/learn/', '_blank')"
+                            class="btn btn-primary" style="background: white; color: #007bff;">
+                            📖 Official Docs
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Popup Modal -->
-        <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
-              background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
-            <div
-                style="position:relative; width:80%; max-width:800px; background:#000; border-radius:10px; overflow:hidden;">
-                <iframe id="youtubeVideo" width="100%" height="450" src="" frameborder="0"
-                    allow="autoplay; encrypted-media" allowfullscreen>
-                </iframe>
-                <button id="closeModal" style="position:absolute; top:10px; right:10px; background:#ff4444; color:#fff; border:none; 
-                     padding:8px 12px; border-radius:6px; font-size:14px; cursor:pointer;">
-                    ✖ Close
-                </button>
-            </div>
-        </div>
-
-        <!-- Inline JS -->
-        <script>
-            const introBtn = document.getElementById("introBtn");
-            const essentialsBtn = document.getElementById("essentialsBtn");
-            const fastapiVideoModal = document.getElementById("videoModal");
-            const youtubeVideo = document.getElementById("youtubeVideo");
-            const closeModal = document.getElementById("closeModal");
-
-            // Open Intro Video
-            introBtn.onclick = () => {
-                youtubeVideo.src = "https://www.youtube.com/embed/AmTbx_8SMMw?autoplay=1";
-                fastapiVideoModal.style.display = "flex";
-            };
-
-            // Open Essentials Video (different link)
-            essentialsBtn.onclick = () => {
-                youtubeVideo.src = "https://www.youtube.com/embed/rvFsGRvj9jo?si=Z6DPwVI39tMIOtA_"; // Example FastAPI essentials video
-                fastapiVideoModal.style.display = "flex";
-            };
-
-            // Close Modal
-            closeModal.onclick = () => {
-                youtubeVideo.src = "";
-                fastapiVideoModal.style.display = "none";
-            };
-
-            // Close on background click
-            window.onclick = (e) => {
-                if (e.target === fastapiVideoModal) {
-                    youtubeVideo.src = "";
-                    fastapiVideoModal.style.display = "none";
-                }
-            };
-
-            // Hover animation for main card
-            const mainBtn = document.getElementById("main-button");
-            mainBtn.addEventListener("mouseover", () => {
-                mainBtn.style.transform = "translateY(-10px) scale(1.03)";
-            });
-            mainBtn.addEventListener("mouseout", () => {
-                mainBtn.style.transform = "translateY(0) scale(1)";
-            });
-        </script>
-    </section>
-
-    <!----------------------button------------------------------------->
-
-    <!-- Video Modal -->
-    <div class="video-modal" id="video-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>FastAPI Course Introduction</h3>
-                <button class="close-modal" id="close-video">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="video-wrapper">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/0sOvCWFmrtA?si=6J8r5f8vVj6XqQ8J"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div id="videoModal" class="video-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>FastAPI Tutorial</h3>
+                    <button class="close-modal" id="closeModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="video-wrapper">
+                        <iframe id="youtubeVideo" width="100%" height="450" src="" frameborder="0"
+                            allow="autoplay; encrypted-media" allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- FastAPI Hacks Section -->
     <section class="section hacks-section" id="hacks">
@@ -1283,32 +1515,35 @@
                             browser.</p>
 
                         <div class="hack-actions">
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="view-code" data-hack="1">
                                 <i class="fas fa-code"></i> View Code Example
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="watch-tutorial" data-hack="1">
                                 <i class="fas fa-video"></i> Watch Tutorial
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="download-cheatsheet" data-hack="1">
                                 <i class="fas fa-download"></i> Download Cheatsheet
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="try-sandbox" data-hack="1">
                                 <i class="fas fa-project-diagram"></i> Try in Sandbox
                             </button>
                         </div>
 
                         <div class="hack-code">
-                            # Automatic API documentation
-                            from fastapi import FastAPI
+                            <button class="copy-btn" data-code="hack1-code">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <pre id="hack1-code"># Automatic API documentation
+from fastapi import FastAPI
 
-                            app = FastAPI()
+app = FastAPI()
 
-                            @app.get("/")
-                            async def root():
-                            return {"message": "Hello World"}
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
 
-                            # Run with: uvicorn main:app --reload
-                            # Visit: http://127.0.0.1:8000/docs
+# Run with: uvicorn main:app --reload
+# Visit: http://127.0.0.1:8000/docs</pre>
                         </div>
                     </div>
                 </div>
@@ -1326,39 +1561,41 @@
                             JSON Schema, and get editor support with type hints.</p>
 
                         <div class="hack-actions">
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="view-code" data-hack="2">
                                 <i class="fas fa-code"></i> View Code Example
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="watch-tutorial" data-hack="2">
                                 <i class="fas fa-video"></i> Watch Tutorial
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="download-cheatsheet" data-hack="2">
                                 <i class="fas fa-download"></i> Download Cheatsheet
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="try-sandbox" data-hack="2">
                                 <i class="fas fa-project-diagram"></i> Try in Sandbox
                             </button>
                         </div>
 
                         <div class="hack-code">
-                            from pydantic import BaseModel
-                            from fastapi import FastAPI
+                            <button class="copy-btn" data-code="hack2-code">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <pre id="hack2-code">from pydantic import BaseModel
+from fastapi import FastAPI
 
-                            app = FastAPI()
+app = FastAPI()
 
-                            class Item(BaseModel):
-                            name: str
-                            price: float
-                            is_offer: bool = False
+class Item(BaseModel):
+    name: str
+    price: float
+    is_offer: bool = False
 
-                            @app.post("/items/")
-                            async def create_item(item: Item):
-                            return item
+@app.post("/items/")
+async def create_item(item: Item):
+    return item</pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Additional hacks would follow the same pattern -->
                 <!-- Hack 3 -->
                 <div class="hack-item">
                     <div class="hack-header">
@@ -1372,31 +1609,34 @@
                             like database connections, authentication, and more.</p>
 
                         <div class="hack-actions">
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="view-code" data-hack="3">
                                 <i class="fas fa-code"></i> View Code Example
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="watch-tutorial" data-hack="3">
                                 <i class="fas fa-video"></i> Watch Tutorial
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="download-cheatsheet" data-hack="3">
                                 <i class="fas fa-download"></i> Download Cheatsheet
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="try-sandbox" data-hack="3">
                                 <i class="fas fa-project-diagram"></i> Try in Sandbox
                             </button>
                         </div>
 
                         <div class="hack-code">
-                            from fastapi import Depends, FastAPI
+                            <button class="copy-btn" data-code="hack3-code">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <pre id="hack3-code">from fastapi import Depends, FastAPI
 
-                            app = FastAPI()
+app = FastAPI()
 
-                            async def common_parameters(q: str = None, skip: int = 0, limit: int = 100):
-                            return {"q": q, "skip": skip, "limit": limit}
+async def common_parameters(q: str = None, skip: int = 0, limit: int = 100):
+    return {"q": q, "skip": skip, "limit": limit}
 
-                            @app.get("/items/")
-                            async def read_items(commons: dict = Depends(common_parameters)):
-                            return commons
+@app.get("/items/")
+async def read_items(commons: dict = Depends(common_parameters)):
+    return commons</pre>
                         </div>
                     </div>
                 </div>
@@ -1415,41 +1655,43 @@
                             responding.</p>
 
                         <div class="hack-actions">
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="view-code" data-hack="4">
                                 <i class="fas fa-code"></i> View Code Example
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="watch-tutorial" data-hack="4">
                                 <i class="fas fa-video"></i> Watch Tutorial
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="download-cheatsheet" data-hack="4">
                                 <i class="fas fa-download"></i> Download Cheatsheet
                             </button>
-                            <button class="hack-action-btn">
+                            <button class="hack-action-btn" data-action="try-sandbox" data-hack="4">
                                 <i class="fas fa-project-diagram"></i> Try in Sandbox
                             </button>
                         </div>
 
                         <div class="hack-code">
-                            from fastapi import BackgroundTasks, FastAPI
+                            <button class="copy-btn" data-code="hack4-code">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <pre id="hack4-code">from fastapi import BackgroundTasks, FastAPI
 
-                            app = FastAPI()
+app = FastAPI()
 
-                            def write_notification(email: str, message=""):
-                            # Simulate sending an email
-                            with open("log.txt", mode="w") as email_file:
-                            content = f"notification for {email}: {message}"
-                            email_file.write(content)
+def write_notification(email: str, message=""):
+    # Simulate sending an email
+    with open("log.txt", mode="w") as email_file:
+        content = f"notification for {email}: {message}"
+        email_file.write(content)
 
-                            @app.post("/send-notification/{email}")
-                            async def send_notification(email: str, background_tasks: BackgroundTasks):
-                            background_tasks.add_task(write_notification, email, message="some notification")
-                            return {"message": "Notification sent in the background"}
+@app.post("/send-notification/{email}")
+async def send_notification(email: str, background_tasks: BackgroundTasks):
+    background_tasks.add_task(write_notification, email, message="some notification")
+    return {"message": "Notification sent in the background"}</pre>
                         </div>
                     </div>
                 </div>
 
                 <!-- Additional hacks would continue here -->
-                <!-- For brevity, I'm showing 4 of the 10 hacks -->
             </div>
         </div>
     </section>
@@ -1490,6 +1732,704 @@
             </div>
         </div>
     </section>
+
+    <!-- Courses Section -->
+    <!-- Courses Section -->
+    <section class="section courses" id="courses">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Explore Our Courses</h2>
+                <p class="section-subtitle">Hand-picked curriculum designed for students from Class 8th to 12th</p>
+            </div>
+
+            <div class="courses-grid">
+                <!-- Course 1 -->
+                <div class="course-card">
+                    <div class="course-image">
+                        <div class="course-category">Beginner</div>
+                        <div class="suspension-buttons">
+                            <button class="suspension-btn preview-btn" data-course="1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="suspension-btn wishlist-btn" data-course="1">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Python Fundamentals</h3>
+                        <div class="course-instructor">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                alt="Instructor">
+                            <span>Alex Johnson</span>
+                        </div>
+                        <p>Master the basics of Python programming with hands-on projects and real-world examples.</p>
+                        <div class="course-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5 (2,340)</span>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="fas fa-video"></i> 24 Lessons</span>
+                            <span><i class="fas fa-clock"></i> 8 Hours</span>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">&#8377;1000</span>
+                            <button class="btn btn-primary btn-small add-to-cart" data-course="1">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">
+                        <div class="course-category">Intermediate</div>
+                        <div class="suspension-buttons">
+                            <button class="suspension-btn preview-btn" data-course="2">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="suspension-btn wishlist-btn" data-course="2">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">FastAPI Mastery</h3>
+                        <div class="course-instructor">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                alt="Instructor">
+                            <span>Sarah Williams</span>
+                        </div>
+                        <p>Build high-performance APIs with FastAPI, from basics to advanced concepts.</p>
+                        <div class="course-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>5.0 (1,890)</span>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="fas fa-video"></i> 32 Lessons</span>
+                            <span><i class="fas fa-clock"></i> 12 Hours</span>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">&#8377;3000</span>
+                            <button class="btn btn-primary btn-small add-to-cart" data-course="2">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #4ecdc4, #88d3ce);">
+                        <div class="course-category">Advanced</div>
+                        <div class="suspension-buttons">
+                            <button class="suspension-btn preview-btn" data-course="3">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="suspension-btn wishlist-btn" data-course="3">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Machine Learning Basics</h3>
+                        <div class="course-instructor">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                alt="Instructor">
+                            <span>Michael Chen</span>
+                        </div>
+                        <p>Introduction to ML concepts with Python, scikit-learn, and real-world projects.</p>
+                        <div class="course-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0 (3,450)</span>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="fas fa-video"></i> 40 Lessons</span>
+                            <span><i class="fas fa-clock"></i> 15 Hours</span>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">&#8377;10,000</span>
+                            <button class="btn btn-primary btn-small add-to-cart" data-course="3">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="course-card">
+                    <div class="course-image" style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);">
+                        <div class="course-category">Beginner</div>
+                        <div class="suspension-buttons">
+                            <button class="suspension-btn preview-btn" data-course="4">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="suspension-btn wishlist-btn" data-course="4">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Web Development with FastAPI</h3>
+                        <div class="course-instructor">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                alt="Instructor">
+                            <span>David Rodriguez</span>
+                        </div>
+                        <p>Create full-stack web applications using FastAPI and modern frontend technologies.</p>
+                        <div class="course-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5 (1,780)</span>
+                            </div>
+                        </div>
+                        <div class="course-meta">
+                            <span><i class="fas fa-video"></i> 28 Lessons</span>
+                            <span><i class="fas fa-clock"></i> 10 Hours</span>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">&#8377;1000</span>
+                            <button class="btn btn-primary btn-small add-to-cart" data-course="4">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="courses-cta" style="text-align: center; margin-top: 50px;">
+                <a href="#pricing" class="btn btn-primary">View All Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <p class="section-subtitle">Choose the plan that works best for you and your learning goals</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Basic Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Starter</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">&#8377;</span>
+                            <span class="price-amount">1000</span>
+                            <span class="price-decimal">2000</span>
+                        </div>
+                        <p class="pricing-period">per month</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Access to 5 beginner courses</li>
+                        <li><i class="fas fa-check"></i> Community support</li>
+                        <li><i class="fas fa-check"></i> Basic coding exercises</li>
+                        <li><i class="fas fa-times"></i> Project submissions</li>
+                        <li><i class="fas fa-times"></i> Certificate of completion</li>
+                        <li><i class="fas fa-times"></i> 1-on-1 mentorship</li>
+                    </ul>
+                    <div class="pricing-suspension">
+                        <button class="suspension-btn plan-details-btn" data-plan="starter">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary select-plan" data-plan="starter">Select Plan</button>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Pro Learner</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">&#8377;</span>
+                            <span class="price-amount">3000</span>
+                            <span class="price-decimal">4000</span>
+                        </div>
+                        <p class="pricing-period">per month</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Access to all courses</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                        <li><i class="fas fa-check"></i> Advanced coding exercises</li>
+                        <li><i class="fas fa-check"></i> Project submissions with feedback</li>
+                        <li><i class="fas fa-check"></i> Certificates of completion</li>
+                        <li><i class="fas fa-check"></i> Monthly 1-on-1 mentorship</li>
+                    </ul>
+                    <div class="pricing-suspension">
+                        <button class="suspension-btn plan-details-btn" data-plan="pro">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        <button class="suspension-btn popular-tag">
+                            <i class="fas fa-crown"></i> Most Popular
+                        </button>
+                    </div>
+                    <button class="btn btn-primary select-plan" data-plan="pro">Select Plan</button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">School Package</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">&#8377;</span>
+                            <span class="price-amount">10,000</span>
+                            <span class="price-decimal">12,000</span>
+                        </div>
+                        <p class="pricing-period">per year (up to 50 students)</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> All Pro features for entire class</li>
+                        <li><i class="fas fa-check"></i> Teacher dashboard & analytics</li>
+                        <li><i class="fas fa-check"></i> Custom learning paths</li>
+                        <li><i class="fas fa-check"></i> Group project collaboration</li>
+                        <li><i class="fas fa-check"></i> Progress tracking for teachers</li>
+                        <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                    </ul>
+                    <div class="pricing-suspension">
+                        <button class="suspension-btn plan-details-btn" data-plan="school">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary select-plan" data-plan="school">Contact Sales</button>
+                </div>
+            </div>
+
+            <div class="pricing-footer" style="text-align: center; margin-top: 50px;">
+                <p>All plans include a 14-day money-back guarantee. <a href="#">Compare all features</a></p>
+            </div>
+        </div>
+    </section>
+    <style>
+        /* Enhanced Courses Section Styles */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            height: 180px;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .suspension-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .suspension-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .suspension-btn:hover {
+            background: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .suspension-btn.wishlist-btn.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .course-content {
+            padding: 25px;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .course-instructor img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .course-content p {
+            color: var(--text);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .course-rating {
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stars i {
+            color: #ffc107;
+        }
+
+        .stars span {
+            margin-left: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .course-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Enhanced Pricing Section Styles */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+        }
+
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .pricing-header {
+            margin-bottom: 30px;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .price-currency {
+            font-size: 1.5rem;
+            align-self: flex-start;
+            margin-right: 2px;
+        }
+
+        .price-amount {
+            font-size: 3.5rem;
+        }
+
+        .price-decimal {
+            font-size: 1.5rem;
+            align-self: flex-start;
+        }
+
+        .pricing-period {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .pricing-features {
+            margin: 30px 0;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .pricing-features li i.fa-check {
+            color: var(--success);
+        }
+
+        .pricing-features li i.fa-times {
+            color: var(--text-light);
+        }
+
+        .pricing-suspension {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .pricing-suspension .suspension-btn {
+            width: auto;
+            height: auto;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .pricing-suspension .popular-tag {
+            background: rgba(247, 37, 133, 0.1);
+            color: var(--accent);
+        }
+
+        .pricing-card .btn {
+            margin-top: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .courses-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .course-price {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .course-price .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        // Enhanced functionality for Courses and Pricing sections
+
+        // Course suspension buttons functionality
+        document.querySelectorAll('.preview-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const courseId = this.getAttribute('data-course');
+                const courseTitle = this.closest('.course-card').querySelector('.course-title').textContent;
+
+                showNotification(`Preview for "${courseTitle}" would open in a real implementation`, 'success');
+            });
+        });
+
+        document.querySelectorAll('.wishlist-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const courseId = this.getAttribute('data-course');
+                const courseTitle = this.closest('.course-card').querySelector('.course-title').textContent;
+
+                this.classList.toggle('active');
+
+                if (this.classList.contains('active')) {
+                    showNotification(`"${courseTitle}" added to your wishlist`, 'success');
+                } else {
+                    showNotification(`"${courseTitle}" removed from your wishlist`, 'success');
+                }
+            });
+        });
+
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const courseId = this.getAttribute('data-course');
+                const courseTitle = this.closest('.course-card').querySelector('.course-title').textContent;
+                const coursePrice = this.closest('.course-card').querySelector('.price').textContent;
+
+                // Add loading animation
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+                this.disabled = true;
+
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Added!';
+                    showNotification(`"${courseTitle}" added to your cart`, 'success');
+
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    }, 2000);
+                }, 1000);
+            });
+        });
+
+        // Plan details buttons
+        document.querySelectorAll('.plan-details-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const plan = this.getAttribute('data-plan');
+                const planTitle = this.closest('.pricing-card').querySelector('.pricing-title').textContent;
+
+                showNotification(`Details for "${planTitle}" plan would open in a modal`, 'success');
+            });
+        });
+
+        // Select plan buttons
+        document.querySelectorAll('.select-plan').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const plan = this.getAttribute('data-plan');
+                const planTitle = this.closest('.pricing-card').querySelector('.pricing-title').textContent;
+
+                if (plan === 'school') {
+                    showNotification(`Contact form for "${planTitle}" would open`, 'success');
+                } else {
+                    // Add loading animation
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    this.disabled = true;
+
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-check"></i> Selected!';
+                        showNotification(`"${planTitle}" plan selected successfully`, 'success');
+
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.disabled = false;
+                        }, 2000);
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+    <!-- Courses Section -->
+
+
 
     <!-- CTA Section -->
     <section class="cta">
@@ -1555,6 +2495,22 @@
     </footer>
 
     <script>
+        // Enhanced functionality for all interactive elements
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+
+            notificationText.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
             document.querySelector('.mobile-menu').classList.toggle('active');
@@ -1575,40 +2531,124 @@
             });
         });
 
-        // Hack action buttons functionality
+        // Enhanced hack action buttons functionality
         document.querySelectorAll('.hack-action-btn').forEach(button => {
             button.addEventListener('click', function (e) {
                 e.stopPropagation(); // Prevent triggering the hack header click
 
-                const action = this.textContent.trim();
+                const action = this.getAttribute('data-action');
+                const hackNumber = this.getAttribute('data-hack');
                 const hackTitle = this.closest('.hack-item').querySelector('.hack-title').textContent;
 
-                // In a real implementation, this would perform the specific action
-                alert(`Action: ${action}\nFor: ${hackTitle}`);
+                // Add loading state
+                this.classList.add('loading');
+
+                // Simulate API call or action
+                setTimeout(() => {
+                    this.classList.remove('loading');
+
+                    // Add success state
+                    this.classList.add('success');
+
+                    // Show appropriate notification
+                    let message = '';
+                    switch (action) {
+                        case 'view-code':
+                            message = `Code example for ${hackTitle} is now visible`;
+                            break;
+                        case 'watch-tutorial':
+                            message = `Opening tutorial for ${hackTitle}`;
+                            // In a real implementation, this would open a video
+                            break;
+                        case 'download-cheatsheet':
+                            message = `Downloading cheatsheet for ${hackTitle}`;
+                            // In a real implementation, this would trigger a download
+                            break;
+                        case 'try-sandbox':
+                            message = `Opening sandbox environment for ${hackTitle}`;
+                            // In a real implementation, this would open a sandbox
+                            break;
+                    }
+
+                    showNotification(message, 'success');
+
+                    // Remove success state after a delay
+                    setTimeout(() => {
+                        this.classList.remove('success');
+                    }, 2000);
+
+                }, 1000); // Simulate 1 second delay
+            });
+        });
+
+        // Copy code functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const codeId = this.getAttribute('data-code');
+                const codeElement = document.getElementById(codeId);
+                const codeText = codeElement.textContent;
+
+                // Copy to clipboard
+                navigator.clipboard.writeText(codeText).then(() => {
+                    // Show success feedback
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Copied!';
+
+                    showNotification('Code copied to clipboard!', 'success');
+
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    showNotification('Failed to copy code', 'error');
+                });
             });
         });
 
         // Video modal functionality
-        const videoModal = document.getElementById('video-modal');
-        const openVideoBtn = document.getElementById('open-video');
-        const closeVideoBtn = document.getElementById('close-video');
+        const videoModal = document.getElementById('videoModal');
+        const introBtn = document.getElementById('introBtn');
+        const essentialsBtn = document.getElementById('essentialsBtn');
+        const youtubeVideo = document.getElementById('youtubeVideo');
+        const closeModal = document.getElementById('closeModal');
 
-        openVideoBtn.addEventListener('click', () => {
+        // Open Intro Video
+        introBtn.addEventListener('click', () => {
+            youtubeVideo.src = "https://www.youtube.com/embed/AmTbx_8SMMw?autoplay=1";
             videoModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            document.body.style.overflow = 'hidden';
         });
 
-        closeVideoBtn.addEventListener('click', () => {
+        // Open Essentials Video
+        essentialsBtn.addEventListener('click', () => {
+            youtubeVideo.src = "https://www.youtube.com/embed/rvFsGRvj9jo?autoplay=1";
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close Modal
+        closeModal.addEventListener('click', () => {
+            youtubeVideo.src = "";
             videoModal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            document.body.style.overflow = 'auto';
         });
 
         // Close modal when clicking outside the content
         videoModal.addEventListener('click', (e) => {
             if (e.target === videoModal) {
+                youtubeVideo.src = "";
                 videoModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
+        });
+
+        // Hover animation for main card
+        const mainBtn = document.getElementById('main-button');
+        mainBtn.addEventListener('mouseover', () => {
+            mainBtn.style.transform = 'translateY(-10px) scale(1.03)';
+        });
+        mainBtn.addEventListener('mouseout', () => {
+            mainBtn.style.transform = 'translateY(0) scale(1)';
         });
 
         // Smooth scrolling for navigation links
@@ -1638,6 +2678,33 @@
                 document.querySelector('.mobile-menu').classList.remove('active');
             }
         });
+
+        // Add animation on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.achievement-card, .feature-card, .course-card');
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        // Initialize elements with hidden state
+        document.querySelectorAll('.achievement-card, .feature-card, .course-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+
+        // Trigger animation on scroll
+        window.addEventListener('scroll', animateOnScroll);
+        // Initial check in case elements are already in view
+        animateOnScroll();
     </script>
 </body>
 
