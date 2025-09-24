@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduFlow - Modern Learning Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --dark: #1d3557;
+            --light: #f8f9fa;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--dark);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-menu .nav-actions {
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .mobile-menu .nav-actions .btn {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 100px;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6eeff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-img {
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Achievements Section */
+        .achievements {
+            background: white;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .achievement-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .achievement-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 450px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            margin-right: 15px;
+        }
+
+        /* FastAPI Hacks Section */
+        .hacks-section {
+            background: white;
+        }
+
+        .hacks-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hack-item {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+
+        .hack-item:hover {
+            transform: translateX(5px);
+        }
+
+        .hack-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .hack-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .hack-toggle {
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .hack-item.active .hack-toggle {
+            transform: rotate(180deg);
+            background: var(--accent);
+        }
+
+        .hack-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .hack-item.active .hack-content {
+            max-height: 1000px;
+        }
+
+        .hack-description {
+            margin-bottom: 20px;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .hack-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .hack-action-btn {
+            padding: 8px 16px;
+            background: rgba(67, 97, 238, 0.1);
+            border: none;
+            border-radius: 20px;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+
+        .hack-action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hack-code {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin-top: 15px;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        /* Courses Section */
+        .courses {
+            background: #f8f9fa;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            height: 180px;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .course-instructor img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: white;
+        }
+
+        .testimonials-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin: 0 20px;
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: #f8f9fa;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+        }
+
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-header {
+            margin-bottom: 30px;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .pricing-period {
+            color: var(--text-light);
+        }
+
+        .pricing-features {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li i {
+            color: var(--success);
+        }
+
+        /* CTA Section */
+        .cta {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+        }
+
+        .cta .btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #a8b2d1;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a8b2d1;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 800px;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--dark);
+            color: white;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-links,
+            .nav-actions {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hack-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .hack-toggle {
+                align-self: flex-end;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .hack-actions {
+                flex-direction: column;
+            }
+
+            .hack-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: space-around;
+            }
+
+            .stat {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    EduFlow
+                </a>
+
+                <ul class="nav-links">
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#hacks">FastAPI Hacks</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="https://affiliatemath.xyz/" class="btn btn-secondary btn-small">Sign In</a>
+                    <a href="https://khanriyazi.github.io/Graphic-Designer/">Get Started</a>
+                </div>
+
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <ul class="nav-links">
+            <li><a href="#achievements">Achievements</a></li>
+            <li><a href="#hacks">FastAPI Hacks</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <a href="#" class="btn btn-secondary">Sign In</a>
+            <a href="#" class="btn btn-primary">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Learn Without <span>Limits</span></h1>
+                    <p class="hero-description">EduFlow empowers educators and learners with a modern, intuitive
+                        platform that makes online learning engaging and effective.</p>
+
+                    <div class="hero-actions">
+                        <a href="https://khanriyazi.github.io/Graphic-Designer/pages/hacks.html"
+                            class="btn btn-primary">Start Learning Free</a>
+                        <a href="https://khanriyazi.github.io/My-To-do/" class="btn btn-secondary">Book a Demo</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-value">50K+</div>
+                            <div class="stat-label">Active Students</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">2.5K+</div>
+                            <div class="stat-label">Expert Instructors</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">10K+</div>
+                            <div class="stat-label">Courses Available</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                        alt="Students learning online" class="hero-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="section achievements" id="achievements">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Learning Journey</h2>
+                <p class="section-subtitle">Years of experience condensed into effective learning pathways</p>
+            </div>
+
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <div class="achievement-value">500+</div>
+                    <div class="achievement-label">Tech Blogs & Hacks</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="achievement-value">300+</div>
+                    <div class="achievement-label">GitHub Repositories</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="achievement-value">20+</div>
+                    <div class="achievement-label">YouTube Tutorials</div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="achievement-value">10K+</div>
+                    <div class="achievement-label">Students Taught</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <!----------------------button------------------------------------->
+    <section class="section video-section"
+        style="padding:60px 20px; background:#f4f7fb; text-align:center; font-family:Arial, sans-serif;">
+        <div class="container" style="max-width:950px; margin:auto;">
+
+            <div class="section-header" style="margin-bottom:40px;">
+                <h2 class="section-title" style="font-size:30px; color:#222; margin-bottom:10px;">
+                    🚀 Welcome to My FastAPI LMS
+                </h2>
+                <p class="section-subtitle" style="font-size:16px; color:#555;">
+                    Learn Python + FastAPI step by step with interactive lessons
+                </p>
+            </div>
+
+            <!-- Main Suspended Button with Image -->
+            <div id="main-button" style="display:inline-block; padding:25px; background:#007bff; border-radius:25px; 
+                box-shadow:0 10px 25px rgba(0,0,0,0.2); cursor:pointer; transition:transform 0.3s ease; 
+                color:#fff; max-width:500px;">
+
+                <!-- Image -->
+                <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI Logo"
+                    style="width:120px; height:auto; display:block; margin:0 auto 15px auto;">
+
+                <!-- Title -->
+                <span style="font-size:22px; font-weight:bold; display:block; margin-bottom:15px;">
+                    Master Python FastAPI
+                </span>
+
+                <!-- Inner Buttons -->
+                <div style="margin-top:10px; display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+                    <!-- Video Popup Button -->
+                    <button id="introBtn" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
+                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
+                        ▶️ Watch Intro
+                    </button>
+
+                    <!-- Essentials Video -->
+                    <button id="essentialsBtn" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
+                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
+                        ⚡ FastAPI Essentials
+                    </button>
+
+                    <!-- Official Link -->
+                    <button onclick="window.open('https://fastapi.tiangolo.com/learn/', '_blank')" style="padding:14px 22px; background:#fff; color:#007bff; border:none; border-radius:12px; 
+                       font-size:15px; font-weight:bold; box-shadow:0 5px 12px rgba(0,0,0,0.15); cursor:pointer;">
+                        📖 Official Docs
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup Modal -->
+        <div id="videoModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+              background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+            <div
+                style="position:relative; width:80%; max-width:800px; background:#000; border-radius:10px; overflow:hidden;">
+                <iframe id="youtubeVideo" width="100%" height="450" src="" frameborder="0"
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
+                <button id="closeModal" style="position:absolute; top:10px; right:10px; background:#ff4444; color:#fff; border:none; 
+                     padding:8px 12px; border-radius:6px; font-size:14px; cursor:pointer;">
+                    ✖ Close
+                </button>
+            </div>
+        </div>
+
+        <!-- Inline JS -->
+        <script>
+            const introBtn = document.getElementById("introBtn");
+            const essentialsBtn = document.getElementById("essentialsBtn");
+            const fastapiVideoModal = document.getElementById("videoModal");
+            const youtubeVideo = document.getElementById("youtubeVideo");
+            const closeModal = document.getElementById("closeModal");
+
+            // Open Intro Video
+            introBtn.onclick = () => {
+                youtubeVideo.src = "https://www.youtube.com/embed/AmTbx_8SMMw?autoplay=1";
+                fastapiVideoModal.style.display = "flex";
+            };
+
+            // Open Essentials Video (different link)
+            essentialsBtn.onclick = () => {
+                youtubeVideo.src = "https://www.youtube.com/embed/rvFsGRvj9jo?si=Z6DPwVI39tMIOtA_"; // Example FastAPI essentials video
+                fastapiVideoModal.style.display = "flex";
+            };
+
+            // Close Modal
+            closeModal.onclick = () => {
+                youtubeVideo.src = "";
+                fastapiVideoModal.style.display = "none";
+            };
+
+            // Close on background click
+            window.onclick = (e) => {
+                if (e.target === fastapiVideoModal) {
+                    youtubeVideo.src = "";
+                    fastapiVideoModal.style.display = "none";
+                }
+            };
+
+            // Hover animation for main card
+            const mainBtn = document.getElementById("main-button");
+            mainBtn.addEventListener("mouseover", () => {
+                mainBtn.style.transform = "translateY(-10px) scale(1.03)";
+            });
+            mainBtn.addEventListener("mouseout", () => {
+                mainBtn.style.transform = "translateY(0) scale(1)";
+            });
+        </script>
+    </section>
+
+    <!----------------------button------------------------------------->
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>FastAPI Course Introduction</h3>
+                <button class="close-modal" id="close-video">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="video-wrapper">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/0sOvCWFmrtA?si=6J8r5f8vVj6XqQ8J"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FastAPI Hacks Section -->
+    <section class="section hacks-section" id="hacks">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">10 FastAPI Hacks for Rapid Learning</h2>
+                <p class="section-subtitle">Accelerate your FastAPI mastery with these proven techniques</p>
+            </div>
+
+            <div class="hacks-container">
+                <!-- Hack 1 -->
+                <div class="hack-item">
+                    <div class="hack-header">
+                        <h3 class="hack-title">1. Interactive API Documentation</h3>
+                        <div class="hack-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="hack-content">
+                        <p class="hack-description">FastAPI automatically generates interactive API documentation
+                            (Swagger UI and ReDoc) that you can use to test your API endpoints directly from the
+                            browser.</p>
+
+                        <div class="hack-actions">
+                            <button class="hack-action-btn">
+                                <i class="fas fa-code"></i> View Code Example
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-video"></i> Watch Tutorial
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-download"></i> Download Cheatsheet
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-project-diagram"></i> Try in Sandbox
+                            </button>
+                        </div>
+
+                        <div class="hack-code">
+                            # Automatic API documentation
+                            from fastapi import FastAPI
+
+                            app = FastAPI()
+
+                            @app.get("/")
+                            async def root():
+                            return {"message": "Hello World"}
+
+                            # Run with: uvicorn main:app --reload
+                            # Visit: http://127.0.0.1:8000/docs
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hack 2 -->
+                <div class="hack-item">
+                    <div class="hack-header">
+                        <h3 class="hack-title">2. Data Validation with Pydantic</h3>
+                        <div class="hack-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="hack-content">
+                        <p class="hack-description">Use Pydantic models to automatically validate request data, generate
+                            JSON Schema, and get editor support with type hints.</p>
+
+                        <div class="hack-actions">
+                            <button class="hack-action-btn">
+                                <i class="fas fa-code"></i> View Code Example
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-video"></i> Watch Tutorial
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-download"></i> Download Cheatsheet
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-project-diagram"></i> Try in Sandbox
+                            </button>
+                        </div>
+
+                        <div class="hack-code">
+                            from pydantic import BaseModel
+                            from fastapi import FastAPI
+
+                            app = FastAPI()
+
+                            class Item(BaseModel):
+                            name: str
+                            price: float
+                            is_offer: bool = False
+
+                            @app.post("/items/")
+                            async def create_item(item: Item):
+                            return item
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional hacks would follow the same pattern -->
+                <!-- Hack 3 -->
+                <div class="hack-item">
+                    <div class="hack-header">
+                        <h3 class="hack-title">3. Dependency Injection System</h3>
+                        <div class="hack-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="hack-content">
+                        <p class="hack-description">FastAPI's dependency injection system helps you manage shared logic
+                            like database connections, authentication, and more.</p>
+
+                        <div class="hack-actions">
+                            <button class="hack-action-btn">
+                                <i class="fas fa-code"></i> View Code Example
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-video"></i> Watch Tutorial
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-download"></i> Download Cheatsheet
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-project-diagram"></i> Try in Sandbox
+                            </button>
+                        </div>
+
+                        <div class="hack-code">
+                            from fastapi import Depends, FastAPI
+
+                            app = FastAPI()
+
+                            async def common_parameters(q: str = None, skip: int = 0, limit: int = 100):
+                            return {"q": q, "skip": skip, "limit": limit}
+
+                            @app.get("/items/")
+                            async def read_items(commons: dict = Depends(common_parameters)):
+                            return commons
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hack 4 -->
+                <div class="hack-item">
+                    <div class="hack-header">
+                        <h3 class="hack-title">4. Background Tasks</h3>
+                        <div class="hack-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="hack-content">
+                        <p class="hack-description">Run tasks in the background after returning a response, perfect for
+                            sending emails, processing data, or other operations that don't need to complete before
+                            responding.</p>
+
+                        <div class="hack-actions">
+                            <button class="hack-action-btn">
+                                <i class="fas fa-code"></i> View Code Example
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-video"></i> Watch Tutorial
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-download"></i> Download Cheatsheet
+                            </button>
+                            <button class="hack-action-btn">
+                                <i class="fas fa-project-diagram"></i> Try in Sandbox
+                            </button>
+                        </div>
+
+                        <div class="hack-code">
+                            from fastapi import BackgroundTasks, FastAPI
+
+                            app = FastAPI()
+
+                            def write_notification(email: str, message=""):
+                            # Simulate sending an email
+                            with open("log.txt", mode="w") as email_file:
+                            content = f"notification for {email}: {message}"
+                            email_file.write(content)
+
+                            @app.post("/send-notification/{email}")
+                            async def send_notification(email: str, background_tasks: BackgroundTasks):
+                            background_tasks.add_task(write_notification, email, message="some notification")
+                            return {"message": "Notification sent in the background"}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional hacks would continue here -->
+                <!-- For brevity, I'm showing 4 of the 10 hacks -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Interactive Learning Environment</h2>
+                <p class="section-subtitle">Our platform is designed with both learners and educators in mind</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="feature-title">Interactive Coding</h3>
+                    <p>Write and execute code directly in the browser with our built-in code editor and sandbox
+                        environment.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Progress Tracking</h3>
+                    <p>Monitor your learning journey with detailed analytics and personalized recommendations.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Peer Learning</h3>
+                    <p>Connect with fellow learners, share code, and get feedback through our community features.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Start Your FastAPI Journey Today</h2>
+            <p class="cta-subtitle">Join thousands of developers mastering API development with our comprehensive course
+            </p>
+            <a href="https://affiliatemath.xyz/" class="btn">Enroll Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EduFlow</h3>
+                    <p>Empowering learners worldwide with accessible, high-quality education.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-medium"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>FastAPI Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Code Examples</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Learning Paths</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Python Fundamentals</a></li>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">API Design</a></li>
+                        <li><a href="#">DevOps</a></li>
+                        <li><a href="#">Career Guidance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> hello@eduflow.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Learn City</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2023 EduFlow. All rights reserved. | FastAPI is a trademark of the FastAPI project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+            document.querySelector('.mobile-menu').classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+
+        // Hack item toggle functionality
+        document.querySelectorAll('.hack-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const hackItem = header.parentElement;
+                hackItem.classList.toggle('active');
+            });
+        });
+
+        // Hack action buttons functionality
+        document.querySelectorAll('.hack-action-btn').forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.stopPropagation(); // Prevent triggering the hack header click
+
+                const action = this.textContent.trim();
+                const hackTitle = this.closest('.hack-item').querySelector('.hack-title').textContent;
+
+                // In a real implementation, this would perform the specific action
+                alert(`Action: ${action}\nFor: ${hackTitle}`);
+            });
+        });
+
+        // Video modal functionality
+        const videoModal = document.getElementById('video-modal');
+        const openVideoBtn = document.getElementById('open-video');
+        const closeVideoBtn = document.getElementById('close-video');
+
+        openVideoBtn.addEventListener('click', () => {
+            videoModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        });
+
+        closeVideoBtn.addEventListener('click', () => {
+            videoModal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+
+        // Close modal when clicking outside the content
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                videoModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+
+                // Close mobile menu if open
+                document.querySelector('.mobile-menu').classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when window is resized to desktop size
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.querySelector('.mobile-menu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
