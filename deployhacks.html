@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy FastAPI on Render - 10 Pro Hacks</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: #fff;
+        }
+
+        /* Main Layout */
+        .main {
+            padding: 30px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ffcc00;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #f1f5f9;
+        }
+
+        /* Progress bar */
+        .progress {
+            background: #334155;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ffcc00, #ff8c00);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .click-counter {
+            margin: 10px auto 30px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Hacks Grid */
+        .hack-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .hack-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .hack-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .hack-card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .hack-card h2 {
+            font-size: 1.2rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .hack-card p {
+            display: none;
+            font-size: 0.95rem;
+            margin: 10px 0;
+            color: #f1f5f9;
+        }
+
+        .reveal-btn {
+            background: #ffcc00;
+            border: none;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .reveal-btn:disabled {
+            background: #444;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .links {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .links a {
+            display: inline-block;
+            padding: 8px 14px;
+            margin: 5px;
+            background: #1d4ed8;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .links a:hover {
+            background: #ffcc00;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main -->
+    <main class="main">
+        <header>
+            <h1>🚀 10 Hacks to Deploy FastAPI on Render</h1>
+            <p>Unlock each hack step by step to master API deployment like a Pro Engineer</p>
+        </header>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="click-counter">Total Hacks Unlocked: <span id="clickCount">0</span></div>
+
+        <div class="hack-container" id="hackContainer"></div>
+    </main>
+
+    <script>
+        const hacks = [
+            { title: "Hack 1: Create a GitHub Repository", img: "https://picsum.photos/400/200?random=1", desc: "Push your FastAPI project to GitHub. Render integrates directly with GitHub for deployments.", links: [{ text: "GitHub Docs", url: "https://docs.github.com/en/repositories" }] },
+            { title: "Hack 2: Setup requirements.txt", img: "https://picsum.photos/400/200?random=2", desc: "List FastAPI, Uvicorn, and dependencies in requirements.txt so Render installs them automatically.", links: [{ text: "FastAPI Docs", url: "https://fastapi.tiangolo.com/" }] },
+            { title: "Hack 3: Add Procfile", img: "https://picsum.photos/400/200?random=3", desc: "Add a Procfile with the command: uvicorn main:app --host=0.0.0.0 --port=10000", links: [{ text: "Render FastAPI Deploy", url: "https://render.com/docs/deploy-fastapi" }] },
+            { title: "Hack 4: Connect GitHub to Render", img: "https://picsum.photos/400/200?random=4", desc: "Login to Render and link your GitHub repo for automatic deployments.", links: [{ text: "Render Docs", url: "https://render.com/docs" }] },
+            { title: "Hack 5: Configure Environment Variables", img: "https://picsum.photos/400/200?random=5", desc: "Add API keys, secrets, and DB URLs under Environment Variables in Render Dashboard.", links: [{ text: "Render Env Vars", url: "https://render.com/docs/environment-variables" }] },
+            { title: "Hack 6: Setup Database", img: "https://picsum.photos/400/200?random=6", desc: "Provision PostgreSQL or other DB in Render, and update your config.", links: [{ text: "Render DB Guide", url: "https://render.com/docs/databases" }] },
+            { title: "Hack 7: Debug with Logs", img: "https://picsum.photos/400/200?random=7", desc: "Check application logs in Render dashboard to debug deployment issues.", links: [{ text: "Render Logs", url: "https://render.com/docs/logs" }] },
+            { title: "Hack 8: Enable HTTPS", img: "https://picsum.photos/400/200?random=8", desc: "Render provides free SSL certificates for all custom domains.", links: [{ text: "Render Custom Domains", url: "https://render.com/docs/custom-domains" }] },
+            { title: "Hack 9: Map Your Custom Domain", img: "https://picsum.photos/400/200?random=9", desc: "Add a CNAME or A record to point your domain to Render.", links: [{ text: "Domain Setup", url: "https://render.com/docs/custom-domains" }] },
+            { title: "Hack 10: Enable Auto Deploy", img: "https://picsum.photos/400/200?random=10", desc: "Turn on auto-deploy so new GitHub pushes automatically redeploy your service.", links: [{ text: "Render Deploys", url: "https://render.com/docs/deploys" }] }
+        ];
+
+        const container = document.getElementById("hackContainer");
+        const progressBar = document.getElementById("progressBar");
+        const clickCountEl = document.getElementById("clickCount");
+        let unlocked = 0;
+
+        hacks.forEach((hack, i) => {
+            const card = document.createElement("div");
+            card.className = "hack-card";
+
+            const img = document.createElement("img");
+            img.src = hack.img;
+
+            const title = document.createElement("h2");
+            title.textContent = hack.title;
+
+            const btn = document.createElement("button");
+            btn.className = "reveal-btn";
+            btn.textContent = "🎁 Unlock Hack";
+
+            const desc = document.createElement("p");
+            desc.textContent = hack.desc;
+
+            const linkBox = document.createElement("div");
+            linkBox.className = "links";
+            hack.links.forEach(link => {
+                const a = document.createElement("a");
+                a.href = link.url;
+                a.textContent = link.text;
+                a.target = "_blank";
+                linkBox.appendChild(a);
+            });
+
+            btn.addEventListener("click", () => {
+                if (desc.style.display === "block") return;
+                desc.style.display = "block";
+                linkBox.style.display = "block";
+                unlocked++;
+                clickCountEl.textContent = unlocked;
+                progressBar.style.width = (unlocked / hacks.length) * 100 + "%";
+                btn.textContent = "✅ Hack Unlocked";
+                btn.disabled = true;
+            });
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(btn);
+            card.appendChild(desc);
+            card.appendChild(linkBox);
+
+            container.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>
